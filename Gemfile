@@ -21,6 +21,12 @@ gem 'foreman'
 gem 'rake'
 gem 'dotenv-rails'
 
+# Use faraday for 3rd party API integration
+gem 'faraday'
+
+# Use active model serializers for easy object serialization to json api spec
+gem 'active_model_serializers', '~> 0.10.0'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
@@ -29,10 +35,11 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  # Spring is the devil
+  # gem 'web-console', '>= 3.3.0'
+  # gem 'spring'
+  # gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
