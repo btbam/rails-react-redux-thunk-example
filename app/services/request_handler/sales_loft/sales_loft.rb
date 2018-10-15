@@ -4,12 +4,23 @@ class RequestHandler::SalesLoft::SalesLoft
   
   attr_reader :base_url, :api_version, :api_key
 
+  # Main class to interface with the SalesLoft API
+  #
+  # @param base_url [String] the base URL of the SalesLoft API. Should come from SalesLoft::Config
+  # @param api_version [String] the api version to be used for this instance of requests. Should come from SalesLoft::Config
+  # @param api_key [String] the api key for the SalesLoft API. Should come from SalesLoft::Config which comes from ENV
+  # @return [RequestHandler::SalesLoft::SalesLoft] object for querying SalesLoft API.
   def initialize(base_url: BASE_URL, api_version: API_VERSION, api_key: API_KEY)
     @base_url = base_url
     @api_version = api_version
     @api_key = api_key
   end
 
+  # Get all people objects associated with SalesLoft API_KEY
+  #
+  # @return [optional, Array<Hash>, RequestHandler::Error]
+  #   Returns Array of Hashes containing SalesLoft People JSON on success.  
+  #   Returns RequestHandler::Error on error.
   def get_all_people
     results = get_resource(resource: GET_PEOPLE_RESOURCE, include_paging_counts: true, per_page: 100)
     if !results.is_a?(RequestHandler::Error)
@@ -21,6 +32,12 @@ class RequestHandler::SalesLoft::SalesLoft
 
   private
 
+  # Loop through all additional pages, based on first page results, and gather all objects
+  #
+  # @param page_1 [Hash] the parsed result of the JSON from the first page
+  # @param resource [String] the resource for the endpoint to be used. Should come from SalesLoft::Config
+  # @param opts [Hash] random options to pass to the SalesLoft API
+  # @return [Array<Hash>] Array of Hashes containing SalesLoft People JSON.
   def get_all_pages(page_1:, resource:, **opts)
     last_page = page_1['metadata']['paging']['total_pages']
     all_objects = page_1['data']
@@ -32,6 +49,13 @@ class RequestHandler::SalesLoft::SalesLoft
     all_objects
   end
 
+  # Call a SalesLoft resource and get results
+  #
+  # @param resource [String] the resource for the endpoint to be used. Should come from SalesLoft::Config
+  # @param opts [Hash] random options to pass to the SalesLoft API
+  # @return [optional, Array<Hash>, RequestHandler::Error]
+  #   Returns Array of Hashes containing SalesLoft People JSON on success.  
+  #   Returns RequestHandler::Error on error.
   def get_resource(resource:, **opts)
     begin
       response = connection.get resource, opts
@@ -46,6 +70,12 @@ class RequestHandler::SalesLoft::SalesLoft
     end
   end
 
+  # Create a Faraday Instance for API accessability
+  #
+  # @param base [String] the base URL of the SalesLoft API. Should come from SalesLoft::Config
+  # @param version [String] the api version to be used for this instance of requests. Should come from SalesLoft::Config
+  # @param key [String] the api key for the SalesLoft API. Should come from SalesLoft::Config which comes from ENV
+  # @return [Faraday] Faraday object to call resources and get results
   def connection(base: base_url, version: api_version, key: api_key)
     @connection ||= begin
       Faraday.new(url: [base, version].join('/')) do |faraday|
