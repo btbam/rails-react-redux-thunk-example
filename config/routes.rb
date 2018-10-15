@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: "json" } do
     get :me, to: 'me#me'
+
+    get :my_people, to: 'sales_loft#my_people'
   end
 
   root to: "main#index"
