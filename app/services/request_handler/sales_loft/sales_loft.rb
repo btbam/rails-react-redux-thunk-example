@@ -24,7 +24,7 @@ class RequestHandler::SalesLoft::SalesLoft
   def get_all_pages(page_1:, resource:, **opts)
     last_page = page_1['metadata']['paging']['total_pages']
     all_objects = page_1['data']
-    current_page = 1
+    current_page = page_1['metadata']['paging']['current_page']
     while(current_page < last_page)
       current_page += 1
       all_objects.push(*get_resource(resource: resource, **opts.merge(page: current_page))['data'])
@@ -36,13 +36,13 @@ class RequestHandler::SalesLoft::SalesLoft
     begin
       response = connection.get resource, opts
     rescue Faraday::ConnectionFailed, Faraday::TimeoutError, Faraday::SSLError => e
-      Rails.logger.error "Faraday Connection Failed: #{e.inspect}"
-      response = Error.new(error: 503, message: 'Service Unavailable')
+      Rails.logger.error "Faraday Failed: #{e.inspect}"
+      return RequestHandler::Error.new(error: 503, message: 'Service Unavailable')
     end
     if response.status == 200
       JSON.parse(response.body)
     else
-      Error.new(error: response.status, message: response.reason_phrase)
+      RequestHandler::Error.new(error: response.status, message: response.reason_phrase)
     end
   end
 

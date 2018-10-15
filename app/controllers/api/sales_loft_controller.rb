@@ -9,7 +9,8 @@ class Api::SalesLoftController < Api::BaseController
       all_people_objects = all_people_response.map{ |person| SalesLoft::Person.new(person) }
       render json: all_people_objects, each_serializer: SalesLoft::PersonSerializer
     else
-      render status: all_people_response.error
+
+      render json: all_people_response, status: all_people_response.error
     end
   end
 end
