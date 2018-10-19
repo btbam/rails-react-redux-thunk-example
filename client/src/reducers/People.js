@@ -22,7 +22,8 @@ export default function peopleReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        people: action.payload.people
+        people: action.payload.people,
+        error: null
       };
 
     case FETCH_PEOPLE_FAILURE:
