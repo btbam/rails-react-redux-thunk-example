@@ -47,3 +47,27 @@ bundle exec foreman start
 ```
 8.) Navigate to localhost:5000
 
+9.) Run Rails Tests:
+```
+bundle exec rake spec
+```
+10.) React Tests:
+```
+npm test
+```
+
+### ToDo:
+
+#### Rails:
+
+1.) Add FactoryBot and Faker for better fake object testing
+
+2.) Refactor tests with Shared Example/Context
+
+3.) Unit test the services.  In the interest of time, I'm depending on a controller 'integration' test with very minimal mocking that actually executes all the code
+
+#### React:
+
+1.) Separate the presentation and logic into separate components
+
+2.) In the interest of time, I didn't test all actions/components/reducers. I provided working tests that show proof of concept for the People reducer, related actions, and PeopleList component
