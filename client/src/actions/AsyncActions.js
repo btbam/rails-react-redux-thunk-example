@@ -20,7 +20,7 @@ export function fetchPeople() {
         dispatch(actions.fetchPeopleSuccess(json.data));
         return json.data;
       })
-      .catch(error => dispatch(actions.fetchPeopleFailure(error)));
+      .catch(error => dispatch(actions.fetchPeopleError(error)));
   };
 }
 
