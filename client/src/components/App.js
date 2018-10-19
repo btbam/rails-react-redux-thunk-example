@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { LandingPage } from './LandingPage'
+import { PeoplePage } from './PeoplePage'
 
 const theme = {
   main: {
@@ -22,7 +22,7 @@ const App = ({ store }) => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <Router>
-          <Route exact path="/" component={LandingPage}/>
+          <Route exact path="/" component={PeoplePage}/>
       </Router>
     </ThemeProvider>
   </Provider>
