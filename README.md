@@ -56,7 +56,7 @@ bundle exec rake spec
 npm test
 ```
 
-### ToDo:
+### ToDo/Notes:
 
 #### Rails:
 
@@ -71,3 +71,6 @@ npm test
 1.) Separate the presentation and logic into separate components
 
 2.) In the interest of time, I didn't test all actions/components/reducers. I provided working tests that show proof of concept for the People reducer, related actions, and PeopleList component
+
+3.) Use proper objects for People returned from the API instead of passing around the json data hash
+
