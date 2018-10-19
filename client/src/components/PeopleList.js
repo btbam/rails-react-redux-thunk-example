@@ -7,17 +7,8 @@ import { fetchPeople, peopleEmailChars, peopleEmailDups } from "../actions/Async
 import EmailChars from "./EmailChars";
 import EmailDups from "./EmailDups";
 
-// console.log("In PeopleList Comp");
-
 class PeopleList extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {isToggleOn: true};
-
-  //   // This binding is necessary to make `this` work in the callback
-  //   this.handleClick = this.handleClick.bind(this);
-  // }
-
+  
   componentDidMount() {
     this.props.dispatch(fetchPeople());
   }
